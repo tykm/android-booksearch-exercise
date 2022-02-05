@@ -1,5 +1,6 @@
 package com.codepath.android.booksearch.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -39,15 +41,14 @@ public class BookListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
 
+        // Checkpoint #3
+        // Switch Activity to Use a Toolbar
+        // see http://guides.codepath.org/android/Using-the-App-ToolBar#using-toolbar-as-actionbar
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-
-        // Checkpoint #3
-        // Switch Activity to Use a Toolbar
-        // see http://guides.codepath.org/android/Using-the-App-ToolBar#using-toolbar-as-actionbar
 
         rvBooks = findViewById(R.id.rvBooks);
         abooks = new ArrayList<>();
@@ -71,6 +72,13 @@ public class BookListActivity extends AppCompatActivity {
                 // Get Book at the given position
                 // Pass the book into details activity using extras
                 // see http://guides.codepath.org/android/Using-Intents-to-Create-Flows
+                Intent detailIntent = new Intent(BookListActivity.this, BookDetailActivity.class);
+                // Get book based on position
+                Book curr_book = abooks.get(position);
+                // Package book
+                detailIntent.putExtra("curr_book", Parcels.wrap(curr_book));
+                // Send intent
+                startActivity(detailIntent);
             }
         });
 

@@ -7,7 +7,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.android.booksearch.R;
+import com.codepath.android.booksearch.models.Book;
+
+import org.parceler.Parcels;
 
 public class BookDetailActivity extends AppCompatActivity {
     private ImageView ivBookCover;
@@ -25,6 +29,14 @@ public class BookDetailActivity extends AppCompatActivity {
         tvAuthor = (TextView) findViewById(R.id.tvAuthor);
 
         // Extract book object from intent extras
+        Book curr_book = (Book) Parcels.unwrap(getIntent().getParcelableExtra("curr_book"));
+
+        // Fill views
+        Glide.with(this)
+                .load(curr_book.getCoverUrl())
+                .into(ivBookCover);
+        tvTitle.setText(curr_book.getTitle());
+        tvAuthor.setText(curr_book.getAuthor());
 
         // Checkpoint #5
         // Reuse the Toolbar previously used in the detailed activity by referring to this guide
