@@ -36,7 +36,6 @@ public class BookListActivity extends AppCompatActivity {
     private BookAdapter bookAdapter;
     private BookClient client;
     private ArrayList<Book> abooks;
-    private ShareActionProvider menuItemShareAction;
     MenuItem menuItemActionProgressItem;
 
     @Override
@@ -143,9 +142,6 @@ public class BookListActivity extends AppCompatActivity {
         // Add SearchView to Toolbar
         // Refer to http://guides.codepath.org/android/Extended-ActionBar-Guide#adding-searchview-to-actionbar guide for more details
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        MenuItem shareItem = menu.findItem(R.id.menu_item_share);
-        // Fetch the reference to the share action provider
-        menuItemShareAction = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
