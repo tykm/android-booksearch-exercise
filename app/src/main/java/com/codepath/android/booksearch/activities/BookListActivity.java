@@ -33,6 +33,7 @@ public class BookListActivity extends AppCompatActivity {
     private BookAdapter bookAdapter;
     private BookClient client;
     private ArrayList<Book> abooks;
+    MenuItem menuItemActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class BookListActivity extends AppCompatActivity {
     // Executes an API call to the OpenLibrary search endpoint, parses the results
     // Converts them into an array of book objects and adds them to the adapter
     private void fetchBooks(String query) {
+        showProgressBar();
         client = new BookClient();
         client.getBooks(query, new JsonHttpResponseHandler() {
 
@@ -106,9 +108,11 @@ public class BookListActivity extends AppCompatActivity {
                         }
                         bookAdapter.notifyDataSetChanged();
                     }
+                    hideProgressBar();
                 } catch (JSONException e) {
                     // Invalid JSON format, show appropriate error.
                     e.printStackTrace();
+                    hideProgressBar();
                 }
             }
 
@@ -152,6 +156,24 @@ public class BookListActivity extends AppCompatActivity {
         // Checkpoint #7 Show Progress Bar
         // see https://guides.codepath.org/android/Handling-ProgressBars#progress-within-actionbar
         //return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        menuItemActionProgressItem = menu.findItem(R.id.miActionProgress);
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        menuItemActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        menuItemActionProgressItem.setVisible(false);
     }
 
     @Override
